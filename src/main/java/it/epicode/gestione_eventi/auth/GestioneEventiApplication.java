@@ -1,4 +1,4 @@
-package it.epicode.gestione_eventi;
+package it.epicode.gestione_eventi.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
