@@ -1,6 +1,7 @@
 package it.epicode.gestione_eventi.auth.jwt;
 
-import it.epicode.security.auth.configs.CustomUserDetailsService;
+
+import it.epicode.gestione_eventi.auth.configs.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

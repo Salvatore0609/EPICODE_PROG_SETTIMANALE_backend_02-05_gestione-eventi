@@ -1,8 +1,9 @@
 package it.epicode.gestione_eventi.auth.authorization;
 
-import it.epicode.security.auth.app_user.AppUser;
-import it.epicode.security.auth.app_user.Role;
-import it.epicode.security.auth.app_user.AppUserService;
+
+import it.epicode.gestione_eventi.auth.app_user.AppUser;
+import it.epicode.gestione_eventi.auth.app_user.AppUserService;
+import it.epicode.gestione_eventi.auth.app_user.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AuthController {
         appUserService.registerUser(
                 registerRequest.getUsername(),
                 registerRequest.getPassword(),
-                Set.of(Role.ROLE_USER) // Assegna il ruolo di default
+                Set.of(Role.UTENTE) // Assegna il ruolo di default
         );
         return ResponseEntity.ok("Registrazione avvenuta con successo");
     }

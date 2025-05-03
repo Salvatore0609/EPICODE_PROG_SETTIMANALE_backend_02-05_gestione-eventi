@@ -1,8 +1,9 @@
 package it.epicode.gestione_eventi.auth.authorization;
 
-import it.epicode.security.auth.app_user.Role;
-import it.epicode.security.auth.app_user.AppUser;
-import it.epicode.security.auth.app_user.AppUserService;
+
+import it.epicode.gestione_eventi.auth.app_user.AppUser;
+import it.epicode.gestione_eventi.auth.app_user.AppUserService;
+import it.epicode.gestione_eventi.auth.app_user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,20 +27,20 @@ public class AuthRunner implements ApplicationRunner {
         // Creazione dell'utente admin se non esiste
         Optional<AppUser> adminUser = appUserService.findByUsername("admin");
         if (adminUser.isEmpty()) {
-            appUserService.registerUser("admin", "adminpwd", Set.of(Role.ROLE_ADMIN));
+            appUserService.registerUser("admin", "adminpwd", Set.of(Role.ORGANIZZATORE));
         }
 
         // Creazione dell'utente user se non esiste
         Optional<AppUser> normalUser = appUserService.findByUsername("user");
         if (normalUser.isEmpty()) {
-            appUserService.registerUser("user", "userpwd", Set.of(Role.ROLE_USER));
+            appUserService.registerUser("user", "userpwd", Set.of(Role.UTENTE));
         }
 
         // Creazione dell'utente seller se non esiste
-        Optional<AppUser> normalSeller = appUserService.findByUsername("seller");
+        /*Optional<AppUser> normalSeller = appUserService.findByUsername("seller");
         if (normalUser.isEmpty()) {
             appUserService.registerUser("seller", "sellerpwd", Set.of(Role.ROLE_SELLER));
-        }
+        }*/
 
 
     }

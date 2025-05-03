@@ -1,7 +1,7 @@
 package it.epicode.gestione_eventi.auth.configs;
 
-import it.epicode.security.auth.jwt.JwtAuthenticationEntryPoint;
-import it.epicode.security.auth.jwt.JwtRequestFilter;
+import it.epicode.gestione_eventi.auth.jwt.JwtAuthenticationEntryPoint;
+import it.epicode.gestione_eventi.auth.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-
 public class SecurityConfig {
 
     @Autowired
@@ -32,22 +30,34 @@ public class SecurityConfig {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
-                .csrf(csrf -> csrf.disable()) // Disabilita CSRF
-                .authorizeHttpRequests(authorize -> authorize
-                        //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Accesso libero a Swagger
-                        //.requestMatchers("/api/**").permitAll()
-                        .anyRequest().permitAll()
-                )
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                // Disabilita CSRF
+                .csrf(csrf -> csrf.disable())
 
-        // Aggiungi il filtro JWT
+                // Configurazione autorizzazioni
+                .authorizeHttpRequests(auth -> auth
+                        // Endpoint pubblici
+                        .requestMatchers("/auth/**").permitAll()
+
+                        // Endpoint per Swagger (scommentare se necessario)
+                        //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                        // Endpoint protetti
+                        .requestMatchers("/eventi/**").hasRole("ORGANIZZATORE")
+
+                        // Tutte le altre richieste
+                        .anyRequest().authenticated()
+                )
+
+                // Gestione eccezioni
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+
+                // Gestione sessioni
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        // Aggiungi filtro JWT
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

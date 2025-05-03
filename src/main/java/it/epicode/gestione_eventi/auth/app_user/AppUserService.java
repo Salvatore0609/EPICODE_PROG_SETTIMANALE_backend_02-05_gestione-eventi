@@ -1,6 +1,7 @@
 package it.epicode.gestione_eventi.auth.app_user;
 
-import it.epicode.security.auth.jwt.JwtTokenUtil;
+
+import it.epicode.gestione_eventi.auth.jwt.JwtTokenUtil;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
